@@ -14,3 +14,11 @@ addTodo.addEventListener('submit', event => {
   <i class="far fa-trash-alt delete" data-trash="${eventValue}"></i>
 </li>`
 })
+
+todosContainer.addEventListener('click', event => {
+  const eventTarget = event.target
+
+  if (eventTarget.dataset.trash) {
+    document.querySelector('li[data-todo]').remove()
+  }
+})
