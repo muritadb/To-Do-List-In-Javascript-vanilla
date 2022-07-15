@@ -1,50 +1,53 @@
-const formTodo = document.querySelector('.form-add-todo')
+const inputAddTodo = document.querySelector('.form-add-todo')
 const todosContainer = document.querySelector('.todos-container')
-const searchTodo = document.querySelector('.form-search')
-// const todo = document.querySelectorAll('li[data-todo]')
+const InputSearchTodo = document.querySelector('.form-search input')
 
-// console.log(form)
-const addTodo = eventValue => {
-  todosContainer.innerHTML += `
-  <li class="list-group-item d-flex justify-content-between align-items-center" data-todo="${eventValue}">
-  <span>${eventValue}</span>
-  <i class="far fa-trash-alt delete" data-trash="${eventValue}"></i>
-  </li>
-  `
-
-}
-
-
-formTodo.addEventListener('submit', event => {
+const addTodo = event => {
   event.preventDefault()
 
   const eventValue = event.target.add.value.trim()
-  //acidiona itens a lista do TODO
-  addTodo(eventValue)
-  event.target.reset()
-})
-
-todosContainer.addEventListener('click', event => {
-  const eventTarget = event.target
-
-  if (eventTarget.dataset.trash) {
-    document.querySelector(`li[data-todo]`).remove()
+  if (eventValue.length) {
+    todosContainer.innerHTML += `
+    <li class="list-group-item d-flex justify-content-between align-items-center" data-todo="${eventValue}">
+      <span>${eventValue}</span>
+      <i class="far fa-trash-alt" data-trash="${eventValue}"></i>
+    </li>
+    `
   }
-})
+  inputAddTodo.reset()
+}
 
-searchTodo.addEventListener('input', event => {
-  const inputValue = event.target.value.trim().toLowerCase()
+const removeTodo = event => {
+  const clickedElement = event.target
+  const trashIconElement = clickedElement.dataset.trash
+
+  if (trashIconElement) {
+    document.querySelector(`[data-todo="${trashIconElement}"]`).remove()
+  }
+}
+
+
+
+
+const searchTodoItem = event => {
+  const eventValue = event.target.value.toLowerCase().trim()
 
   Array.from(todosContainer.children)
-    .filter(todo => !todo.textContent.toLowerCase().includes(inputValue))
+    .filter(todo => !todo.textContent.toLowerCase().includes(eventValue))
     .forEach(todo => {
       todo.classList.remove('d-flex')
       todo.classList.add('hidden')
     })
   Array.from(todosContainer.children)
-    .filter(todo => todo.textContent.toLowerCase().includes(inputValue))
+    .filter(todo => todo.textContent.toLowerCase().includes(eventValue))
     .forEach(todo => {
       todo.classList.remove('hidden')
       todo.classList.add('d-flex')
     })
-})
+}
+
+
+
+inputAddTodo.addEventListener('submit', addTodo)
+todosContainer.addEventListener('click', removeTodo)
+InputSearchTodo.addEventListener('input', searchTodoItem)
