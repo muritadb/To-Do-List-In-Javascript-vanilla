@@ -17,3 +17,8 @@ input[type=text]:focus {
 i[data-trash] {
   cursor: pointer;
 }
+
+.hidden {
+  display: none;
+  transition: .5s;
+}
