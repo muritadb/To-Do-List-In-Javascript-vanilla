@@ -1,4 +1,5 @@
 # TODO-List in javascript vanilla 
+## Live: [TODO App](https://todo-jsvanilla.netlify.app/)
 
 coisas a fazer no projeto:
 * funcao de adicionar
